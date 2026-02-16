@@ -1,0 +1,45 @@
+type User @table {
+  username: String!
+  email: String!
+  createdAt: Timestamp!
+  avatarUrl: String
+  universityId: String
+  lastLogin: Timestamp
+}
+
+type Module @table {
+  name: String!
+  description: String!
+  difficultyLevel: String!
+  createdAt: Timestamp!
+  thumbnailUrl: String
+}
+
+type Scenario @table {
+  module: Module
+  title: String!
+  description: String!
+  type: String!
+  createdAt: Timestamp!
+  pointsAwarded: Int
+}
+
+type UserProgress @table(key: ["user", "module", "scenario"]) {
+  user: User!
+  module: Module!
+  scenario: Scenario!
+  score: Int!
+  status: String!
+  lastAttemptedAt: Timestamp!
+  highestScore: Int
+}
+
+type EducationalResource @table {
+  module: Module
+  scenario: Scenario
+  title: String!
+  contentType: String!
+  url: String
+  content: String
+  author: String
+}
