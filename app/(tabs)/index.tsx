@@ -35,7 +35,7 @@ export default function App() {
   const [answers, setAnswers] = useState({ q1: '' });
   const [gameResult, setGameResult] = useState('');
   const [isSaving, setIsSaving] = useState(false);
-  const [timer, setTimer] = useState(15);
+  const [timer, setTimer] = useState(60);
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
   const [streak, setStreak] = useState(0);
@@ -228,6 +228,17 @@ export default function App() {
     ]).start(() => setShowCelebration(false));
   };
 
+  // Helper to advance screens (used because Alert.alert callbacks
+  // don't reliably run on web/Expo web fallback). Uses a short timeout
+  // so native alerts still show briefly before navigation.
+  const goToScreen = (screenName: string, levelNum?: number) => {
+    setTimeout(() => {
+      if (typeof levelNum === 'number') setLevel(levelNum);
+      setTimer(60);
+      setScreen(screenName);
+    }, 250);
+  };
+
   const checkAchievements = (currentScore: number, currentLevel: number, isCorrect: boolean): string[] => {
     const newAchievements: string[] = [];
     
@@ -376,7 +387,7 @@ export default function App() {
           <Text style={styles.difficultyTitle}>🎯 Mission Briefing:</Text>
           <Text style={styles.difficultyText}>
             • 5 Levels of cyber threats{"\n"}
-            • 15 seconds per challenge{"\n"}
+            • 60 seconds per challenge{"\n"}
             • 3 lives to complete mission{"\n"}
             • Bonus points for speed & streaks
           </Text>
@@ -395,12 +406,12 @@ export default function App() {
         
         <TouchableOpacity 
           style={styles.btn} 
-          onPress={() => { 
+            onPress={() => { 
             const newAnswers = {...answers, q1: 'Yes'};
             setAnswers(newAnswers);
             saveData(newAnswers);
             trackEvent('quiz_answered', { question: 'email_checking', answer: 'Yes' });
-            setTimer(15);
+            setTimer(60);
             initializeScenarios();
             setScreen('game'); 
           }}
@@ -410,12 +421,12 @@ export default function App() {
         
         <TouchableOpacity 
           style={styles.btn} 
-          onPress={() => { 
+            onPress={() => { 
             const newAnswers = {...answers, q1: 'No'};
             setAnswers(newAnswers);
             saveData(newAnswers);
             trackEvent('quiz_answered', { question: 'email_checking', answer: 'No' });
-            setTimer(15);
+            setTimer(60);
             initializeScenarios();
             setScreen('game'); 
           }}
@@ -514,10 +525,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(2);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level2');
               }}]
             );
+            goToScreen('level2', 2);
           }}
         >
           <Text style={styles.btnText}>🚨 REPORT PHISHING</Text>
@@ -551,10 +563,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(2);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level2');
               }}]
             );
+            goToScreen('level2', 2);
           }}
         >
           <Text style={styles.btnText}>✅ LOOKS SAFE</Text>
@@ -637,10 +650,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(3);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level3');
               }}]
             );
+            goToScreen('level3', 3);
           }}
         >
           <Text style={styles.btnText}>🚨 REPORT PHISHING</Text>
@@ -674,10 +688,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(3);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level3');
               }}]
             );
+            goToScreen('level3', 3);
           }}
         >
           <Text style={styles.btnText}>✅ LOOKS SAFE</Text>
@@ -751,10 +766,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(4);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level4');
               }}]
             );
+            goToScreen('level4', 4);
           }}
         >
           <Text style={styles.btnText}>🚨 REPORT SCAM</Text>
@@ -788,10 +804,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(4);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level4');
               }}]
             );
+            goToScreen('level4', 4);
           }}
         >
           <Text style={styles.btnText}>✅ APPLY NOW</Text>
@@ -865,10 +882,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(5);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level5');
               }}]
             );
+            goToScreen('level5', 5);
           }}
         >
           <Text style={styles.btnText}>🚨 HANG UP & REPORT</Text>
@@ -902,10 +920,11 @@ export default function App() {
             Alert.alert(isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔', message, 
               [{ text: 'Continue', onPress: () => {
                 setLevel(5);
-                setTimer(15);
+                setTimer(60);
                 setScreen('level5');
               }}]
             );
+            goToScreen('level5', 5);
           }}
         >
           <Text style={styles.btnText}>✅ PROVIDE INFO</Text>
@@ -983,6 +1002,7 @@ export default function App() {
                 setScreen('results');
               }}]
             );
+            goToScreen('results');
           }}
         >
           <Text style={styles.btnText}>🚨 AVOID DOWNLOAD</Text>
@@ -1018,6 +1038,7 @@ export default function App() {
                 setScreen('results');
               }}]
             );
+            goToScreen('results');
           }}
         >
           <Text style={styles.btnText}>✅ DOWNLOAD FILES</Text>
@@ -1067,7 +1088,7 @@ export default function App() {
           setName('');
           setAnswers({ q1: '' });
           setGameResult('');
-          setTimer(15);
+          setTimer(60);
           setScore(0);
           setLevel(1);
           setStreak(0);
@@ -1427,3 +1448,4 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
+
