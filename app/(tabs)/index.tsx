@@ -20,12 +20,12 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from 'firebase/database';
 
 // Video imports - add more videos here
-const socialEngineeringVideo = require('../../assets/videos/social_engineering.mp4');
-const phishingIntroVideo = require('../../assets/videos/phishing_intro.mp4');
-const spottingSuspiciousEmailsVideo = require('../../assets/videos/spotting_suspicious_emails.mp4');
-const safePasswordPracticesVideo = require('../../assets/videos/safe_password_practices.mp4');
-const socialEngineeringAttacksVideo = require('../../assets/videos/social_engineering_attacks.mp4');
-const protectingYourDataVideo = require('../../assets/videos/protecting_your_data.mp4');
+//const socialEngineeringVideo = require('../../assets/videos/social_engineering.mp4');
+//const phishingIntroVideo = require('../../assets/videos/phishing_intro.mp4');
+//const spottingSuspiciousEmailsVideo = require('../../assets/videos/spotting_suspicious_emails.mp4');
+//const safePasswordPracticesVideo = require('../../assets/videos/safe_password_practices.mp4');
+//const socialEngineeringAttacksVideo = require('../../assets/videos/social_engineering_attacks.mp4');
+//const protectingYourDataVideo = require('../../assets/videos/protecting_your_data.mp4');
 // const emailSecurityVideo = require('../../assets/videos/email_security.mp4');
 const firebaseConfig = {
   apiKey: "AIzaSyAsaSYA0PsrL1EUIBr-Wgsp2hvFWW8cH68",
@@ -2083,7 +2083,7 @@ export const VideoTraining = () => {
       {!showQuiz && (
         <View style={styles.videoContainer}>
           <ExpoVideo
-            source={socialEngineeringVideo}
+            source={{ uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}} // Direct MP4 URL
             style={styles.video}
             useNativeControls
             resizeMode={ResizeMode.CONTAIN}
