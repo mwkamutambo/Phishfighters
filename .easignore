@@ -1,0 +1,14 @@
+# Block all video files anywhere in the project
+**/*.mp4
+**/*.mov
+**/*.wmv
+**/*.avi
+
+# Block the assets/videos folder globally
+**/assets/videos/*
+
+# Standard ignores
+node_modules/
+.git/
+.expo/
+dist/
